@@ -1,8 +1,23 @@
-# Predefined list of prime numbers up to 100
-primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+# Function to check if a number is prime
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-# Function to calculate prime factors of a number using the provided prime numbers list
+# Generate a list of prime numbers up to a given limit
+def generate_primes(limit):
+    primes = []
+    for number in range(2, limit + 1):
+        if is_prime(number):
+            primes.append(number)
+    return primes
+
+# Function to calculate prime factors of a number using the generated prime numbers list
 def prime_factors(n):
+    primes = generate_primes(n)
     factors = []
     for prime in primes:
         while n % prime == 0:
