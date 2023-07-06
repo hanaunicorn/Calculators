@@ -16,11 +16,10 @@ for i in range(tries):
     if digits <= 50:
         print_pi(digits)
         if i == 0:
-            print("You are a certified smart person.")
+            print("You are a certified smart person.〜◍⊖◍)〜")
         print("You understand how to follow instructions. 눈_눈")
         break
     elif i < tries - 1:
         print("The maximum number of digits is 50. Please comply if you want to use this. ლಠ益ಠლ)")
     else:
         print("I give up. ꒰╬•᷅д•᷄╬꒱")
-
