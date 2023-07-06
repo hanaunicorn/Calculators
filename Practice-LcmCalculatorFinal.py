@@ -1,4 +1,4 @@
-# Return if a number is prime
+# Return true if a number is prime, otherwise false
 def is_prime(n):
     if n <= 1:
         return False
