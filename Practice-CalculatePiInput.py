@@ -1,19 +1,18 @@
-import math
+# Set up variables to calculate
+def calculate_pi(n):
+    pi = 0.0
+    sign = 1
 
-def calculate_pi(circumference, diameter):
-    pi = circumference / diameter
-    pi = round(pi, 13)  # Round the value of pi to 13 decimal places
+    # Repeat the equation to find answer
+    for i in range(n):
+        term = sign * (1 / (2*i + 1))  # Calculate the current term of the series
+        pi += term  # Add the term to the total sum
+        sign *= -1  # Alternate the sign for the next term
+
+    pi *= 4  # Multiply the sum by 4 to approximate pi
     return pi
 
-# Get user input
-circumference = float(input("Enter the circumference: "))
-diameter = float(input("Enter the diameter: "))
+num_terms = 100000  # Number of terms to be used for the approximation
+exact_pi = calculate_pi(num_terms)  # Call the calculate_pi function to get the approximate value of pi
+print("Exact value of pi:", exact_pi)  # Print the approximate value of pi
 
-# Calculate pi
-pi = calculate_pi(circumference, diameter)
-
-# Format the string without trailing zeros
-pi_str = format(pi, '.13f').rstrip('0')
-
-# Print the first 13 digits of pi
-print(f"The first 13 digits of pi (the last digit is rounded) are: {pi_str}")
