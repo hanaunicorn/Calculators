@@ -1,0 +1,21 @@
+import itertools
+
+def generate_combinations(known_letters):
+    fixed_letter = known_letters[0]
+    unknown_positions = known_letters.count("_")
+    letters = set(known_letters.replace("_", "abcdefghijklmnopqrstuvwxyz"))
+    combinations = list(itertools.product(letters, repeat=unknown_positions))
+    return [fixed_letter + ''.join(combination) for combination in combinations]
+
+known_letters = input("Enter known letters (use _ for unknown letters): ").lower()
+
+combinations = generate_combinations(known_letters)
+print("Generated combinations:")
+for combination in combinations:
+    output = ""
+    for i, letter in enumerate(combination):
+        if letter == known_letters[0]:
+            output += known_letters[0]
+        else:
+            output += letter
+    print(output)
