@@ -1,0 +1,15 @@
+def validate_input(input_str):
+    if (input_str.lstrip('-').isdigit() and len(input_str.lstrip('-')) <= 16) or (input_str.count('.') == 1 and (input_str.replace('.', '', 1).lstrip('-')).isdigit()):
+        return int(input_str)  # Convert valid input to int
+    else:
+        return None  # Return None for invalid input
+
+
+user_input = input("Enter a number (up to 16 digits): ")
+
+result = validate_input(user_input)  # Pass the input string directly to the validation function
+
+if result is None:
+    print("Invalid input")
+else:
+    print("Result: {}".format(result))
