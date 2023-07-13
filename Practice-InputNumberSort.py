@@ -1,9 +1,9 @@
 def bubble_sort(numbers):
     n = len(numbers)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if numbers[j] > numbers[j + 1]:
-                numbers[j], numbers[j + 1] = numbers[j + 1], numbers[j]
+    for b in range(n): # Sets the range of numbers
+        for c in range(0, n - b - 1): #  Ensures there are no duplicates of a number
+            if numbers[c] > numbers[c + 1]: # Sorts the numbers by comparing and switching the positions of numbers
+                numbers[c], numbers[c + 1] = numbers[c + 1], numbers[c]
 
 numbers_input = input("Enter numbers separated by commas: ")
 
