@@ -13,6 +13,8 @@ def add_numbers(num1, num2):
         num1 = "0" * (len2 - len1) + num1
     elif len2 < len1:
         num2 = "0" * (len1 - len2) + num2
+    else:
+        assert (len2 == len1); # don't do anything
 
     result = ""
     carry = 0
