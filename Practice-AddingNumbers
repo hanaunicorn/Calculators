@@ -14,7 +14,7 @@ def add_numbers(num1, num2):
 
     # Perform the addition
     for i in range(max_len):
-        # Get the current digits to add
+        # Get the current digits to add, adds two at a time, and if it runs out, assumes as zero
         digit1 = int(num1[i]) if i < len1 else 0
         digit2 = int(num2[i]) if i < len2 else 0
 
