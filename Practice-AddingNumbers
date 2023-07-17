@@ -1,32 +1,34 @@
-# This section of 3 lines is the same as last time
 def add_numbers(num1, num2):
     if len(num1) > 100 or len(num2) > 100:
         return "Error: Numbers exceed maximum length of 100 digits."
 
-    # Determine the length of each number
-    len1 = len(num1)
-    len2 = len(num2)
-
-    # Make the lengths equal by adding zeros to the left of the shorter number
-    # This adds as many zeros as needed using the greater number's length subtract the smaller number's length to determine the amount of zeros to be added.
-    if len1 < len2:
-        num1 = "0" * (len2 - len1) + num1
-    elif len2 < len1:
-        num2 = "0" * (len1 - len2) + num2
-    else:
-        assert (len2 == len1); # don't do anything
+    # Reverse the numbers for easier addition from right to left
+    num1 = num1[::-1]
+    num2 = num2[::-1]
 
     result = ""
     carry = 0
+    len1 = len(num1)
+    len2 = len(num2)
+    max_len = max(len1, len2)
 
-# From this point, the code is the same as last time
     # Perform the addition
-    for i in range(len(num1) - 1, -1, -1):
-        digit_sum = int(num1[i]) + int(num2[i]) + carry
+    for i in range(max_len):
+        # Get the current digits to add
+        digit1 = int(num1[i]) if i < len1 else 0
+        digit2 = int(num2[i]) if i < len2 else 0
+
+        # Add the digits along with the carry from the previous addition
+        digit_sum = digit1 + digit2 + carry
+
+        # Calculate the current digit and the new carry
         digit = digit_sum % 10
         carry = digit_sum // 10
+
+        # Prepend the current digit to the result
         result = str(digit) + result
 
+    # If there's still a carry, add it to the result
     if carry:
         result = str(carry) + result
 
