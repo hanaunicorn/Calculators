@@ -12,7 +12,7 @@ def get_number_sequences(number_sequence):
     second_sequence = ""
     is_first_sequence = True
 
-# char.isdigit is for checking if the character, in this case number or letter is a number digit. 
+# char.isdigit is for checking if the character, in this case number or letter is a number digit.  
 # If so, it keeps track of it, and makes it part of the first sequence.
 # The code continues until it hits a letter, ending the sequence, filtering through more numbers.
 # Once it finds the second set of numbers, it records all, and checks to make sure they are the same as the first.
