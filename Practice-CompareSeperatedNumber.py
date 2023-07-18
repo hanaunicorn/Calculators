@@ -17,16 +17,21 @@ def get_number_sequences(number_sequence):
 # The code continues until it hits a letter, ending the sequence, filtering through more numbers.
 # Once it finds the second set of numbers, it records all, and checks to make sure they are the same as the first.
 
-    for char in number_sequence:
-        if char.isdigit():
-            if is_first_sequence:
-                first_sequence += char
-            else:
-                second_sequence += char
+# Iterate over each character in the number sequence
+for char in number_sequence:
+    # Check if the character is a digit
+    if char.isdigit():
+        # If it's the first number sequence, add the digit to the first sequence
+        if is_first_sequence:
+            first_sequence += char
+        # If it's the second number sequence, add the digit to the second sequence
         else:
-            is_first_sequence = False
+            second_sequence += char
+    else:
+        # Once non-digit characters are encountered, switch to the second number sequence
+        is_first_sequence = False
 
-    return first_sequence, second_sequence
+return first_sequence, second_sequence
 
 
 # Testing the code with different scenarios
