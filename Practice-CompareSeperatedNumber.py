@@ -5,7 +5,7 @@ def check_spacing(number_sequence):
 
     return True
 
-
+ 
 # Get the first and second number sequences
 def get_number_sequences(number_sequence):
     first_sequence = ""
