@@ -8,10 +8,17 @@ def sort_and_remove_duplicates(input_list):
 
 def dojob(input1, input2):
     # Ensure that the input lists contain only integers separated by spaces
-    assert all(num.isdigit() for num in input1), "list1 should contain only integers separated by spaces"
-    assert all(num.isdigit() for num in input2), "list2 should contain only integers separated by spaces"
+    assert all(num.isdigit() for num in input1.split()), "list1 should contain only integers separated by spaces"
+    assert all(num.isdigit() for num in input2.split()), "list2 should contain only integers separated by spaces"
 
-    combined_list = input1 + input2
+    # Split the input strings into lists of integers
+    input1_list = input1.split()
+    input2_list = input2.split()
+
+    # Combine the two lists
+    combined_list = input1_list + input2_list
+
+    # Sort and remove duplicates from the combined list
     sorted_list = sort_and_remove_duplicates(combined_list)
 
     # Assert the lists have no duplicates
@@ -20,9 +27,10 @@ def dojob(input1, input2):
 
 def main():
     # Assert the sorted list is correct
-    assert [1, 2, 3, 5, 6, 8] == dojob(['1', '1', '1', '2', '2'], ['2', '2', '2', '3', '5', '6', '8'])
-    assert [1, 2] == dojob(['1', '1', '1', '2', '2'], [])
-    assert [] == dojob([], [])
+    assert [1, 2, 3, 5, 6, 8] == dojob('1 1 1 2 2', '2 2 2 3 5 6 8')
+    assert [1, 2] == dojob('1 1 1 2 2', '')
+    assert [] == dojob('', '')
 
 if __name__ == "__main__":
     main()
+
