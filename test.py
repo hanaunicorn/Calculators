@@ -15,10 +15,7 @@ def dojob(input1, input2):
     input1_list = input1.split()
     input2_list = input2.split()
 
-    # Combine the two lists
     combined_list = input1_list + input2_list
-
-    # Sort and remove duplicates from the combined list
     sorted_list = sort_and_remove_duplicates(combined_list)
 
     # Assert the lists have no duplicates
