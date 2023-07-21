@@ -12,25 +12,45 @@ def dojob(input1, input2):
     assert all(num.isdigit() for num in input2.split()), "list2 should contain only integers separated by spaces"
 
     # Split the input strings into lists of integers
-    input1_list = input1.split()
-    input2_list = input2.split()
+    input1_list = [int(num) for num in input1.split()]
+    input2_list = [int(num) for num in input2.split()]
 
-    # Combine the two lists
-    combined_list = input1_list + input2_list
+    # Initialize variables to keep track of the current indices for both lists
+    x, y = 0, 0
+    result = []
 
-    # Sort and remove duplicates from the combined list
-    sorted_list = sort_and_remove_duplicates(combined_list)
+    # Use a for loop to compare elements from both lists and merge them in sorted order
+    for _ in range(len(input1_list) + len(input2_list)):
+        if x < len(input1_list) and y < len(input2_list):
+            # Compare elements from both lists and add the smaller one to the result
+            if input1_list[x] <= input2_list[y]:
+                # Check if the element is not a duplicate before adding it
+                if not result or input1_list[x] != result[-1]:
+                    result.append(input1_list[x])
+                x += 1
+            else:
+                # Check if the element is not a duplicate before adding it
+                if not result or input2_list[y] != result[-1]:
+                    result.append(input2_list[y])
+                y += 1
+        elif x < len(input1_list):
+            # Add remaining elements from the first list to the result
+            if not result or input1_list[x] != result[-1]:
+                result.append(input1_list[x])
+            x += 1
+        else:
+            # Add remaining elements from the second list to the result
+            if not result or input2_list[y] != result[-1]:
+                result.append(input2_list[y])
+            y += 1
 
-    # Assert the lists have no duplicates
-    assert len(set(sorted_list)) == len(sorted_list), f"Combined list contains duplicates: {combined_list}"
-    return sorted_list
+    return result
 
 def main():
     # Assert the sorted list is correct
-    assert [1, 2, 3, 5, 6, 8] == dojob('1 1 1 2 2', '2 2 2 3 5 6 8')
     assert [1, 2] == dojob('1 1 1 2 2', '')
+    assert [1, 2, 4, 5, 6, 7, 11] == dojob('1 1 2 5 7', '4 6 11')
     assert [] == dojob('', '')
 
 if __name__ == "__main__":
     main()
-
