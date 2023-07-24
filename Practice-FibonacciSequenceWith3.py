@@ -1,23 +1,12 @@
 def dojob(n):
-    # If n is 0 or negative, return 0
+    # Base cases: n <= 0 returns 0, n <= 3 returns 1
     if n <= 0:
         return 0
-    # If n is 1, 2, or 3, return 1
     elif n <= 3:
         return 1
 
-    # Initialize the first three numbers of the sequence to 1
-    a, b, c = 1, 1, 1
-
-    # Calculate the nth number of the sequence by adding the three previous numbers iteratively
-    # Start from 4 as the first three numbers are already initialized
-    for _ in range(4, n + 1):
-        # Update the values of a, b, and c by shifting them to the right
-        # a becomes the previous b, b becomes the previous c, and c is updated to the sum of the three
-        a, b, c = b, c, a + b + c
-
-    # The variable c holds the value of the nth number in the sequence
-    return c
+    # Recursive step: Calculate the nth number by summing the results of the three previous numbers
+    return dojob(n - 1) + dojob(n - 2) + dojob(n - 3)
 
 # Get user input for the value of n
 n = None
