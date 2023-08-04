@@ -9,7 +9,7 @@ def dojob(sql):
     # Regular expression patterns to match SQL commands
     create_match = re.match(r'create table (\w+) \((\w+) int\);', sql, re.IGNORECASE)
     insert_match = re.match(r'insert into (\w+) values\((\d+)\);', sql, re.IGNORECASE)
-    select_match = re.match(r'select (\w+) from (\w+)(?: where (\w+)([><=]+)(\d+))?;', sql, re.IGNORECASE)
+    select_match = re.match(r'select (\w+) from (\w+)(?: where \((.*?)\))?;', sql, re.IGNORECASE)
 
     if create_match:
         # If it's a "CREATE TABLE" command, extract table_name and column_name
@@ -29,27 +29,36 @@ def dojob(sql):
             print(f"Table {table_name} is full")
 
     elif select_match:
-        column, table_name, condition_column, condition_operator, condition_value = select_match.groups()
+        column, table_name, conditions = select_match.groups()
         rows = tables.get(table_name, [])
-        if condition_column and condition_operator and condition_value:
-            condition_value = int(condition_value)
-            if condition_operator == ">":
-                rows = [row for row in rows if row > condition_value]
-            elif condition_operator == "<":
-                rows = [row for row in rows if row < condition_value]
-            elif condition_operator == "=":
-                rows = [row for row in rows if row == condition_value]
-            elif condition_operator == ">=":
-                rows = [row for row in rows if row >= condition_value]
-            elif condition_operator == "<=":
-                rows = [row for row in rows if row <= condition_value]
+        
+        if conditions:
+            # Split the conditions using 'or' as the separator
+            or_conditions = re.split(r'\s+or\s+', conditions, flags=re.IGNORECASE)
+            results = []
+            for condition in or_conditions:
+                # Extract the individual components of each condition
+                condition_column, condition_operator, condition_value = re.match(r'(\w+)\s*([><=]+)\s*(\d+)', condition).groups()
+                condition_value = int(condition_value)
+                # Process each condition and filter the rows accordingly
+                if condition_operator == ">":
+                    result = [row for row in rows if row > condition_value]
+                elif condition_operator == "<":
+                    result = [row for row in rows if row < condition_value]
+                elif condition_operator == "=":
+                    result = [row for row in rows if row == condition_value]
+                elif condition_operator == ">=":
+                    result = [row for row in rows if row >= condition_value]
+                elif condition_operator == "<=":
+                    result = [row for row in rows if row <= condition_value]
+                results.extend(result)
 
-        # Print the table name
+            # Remove duplicates while preserving the original order
+            rows = list(dict.fromkeys(results))
+
+        # Print the table name and the entire row list
         print(f"Table {table_name}:")
-        # Convert the rows to strings and join them with commas
-        rows_str = ', '.join(map(str, rows))
-        # Print the rows
-        print(rows_str)
+        print(rows)
         # Return the rows as a list of integers
         return rows
 
@@ -73,7 +82,9 @@ def main():
             "select i from b;",
             "select i from a where i=3;",
             "select i from b where i=4;",
-            "select i from b where i<5 and i>2;"  # Modified SELECT command with AND condition
+            "select i from b where i<6 and i>2;",
+            # Test with the OR operator and bracketed expression
+            "select i from b where (i<6 and i>2) or (i=4 and 1<5);"
         ]
 
         # Collect the values for each table
@@ -87,8 +98,7 @@ def main():
         # Print the collected values for each table
         for table_name, values_list in table_values.items():
             print(f"Table {table_name}:")
-            for values in values_list:
-                print(', '.join(map(str, values)))
+            print(values_list)
 
     except ValueError as e:
         print(f"Error: {str(e)}")
